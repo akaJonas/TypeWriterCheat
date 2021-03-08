@@ -9,20 +9,34 @@ import java.awt.*;
 
 public class Main {
 
+    /**
+     * username and password for Typewriter.at
+     */
     static String username = "username";
     static String password = "password";
+
+
+    /**
+     * Delay between writing the characters
+     */
     static int delay = 20;
 
     static WebDriver driver;
 
     public static void main(String[] args) throws InterruptedException, AWTException {
 
+        // setup the chromedriver
         System.setProperty("webdriver.chrome.driver", "chromeDriverPath");
         driver = new ChromeDriver();
 
+        //maximize the window and enter to url
         driver.manage().window().maximize();
         driver.get("https://at4.typewriter.at/");
 
+
+        /**
+         * login on page
+         */
         waitForBy(By.className("login-input"), true);
         driver.findElement(By.id("LoginForm_username")).clear();
         driver.findElement(By.id("LoginForm_username")).sendKeys(username);
@@ -30,16 +44,28 @@ public class Main {
         driver.findElement(By.id("LoginForm_pw")).clear();
         driver.findElement(By.id("LoginForm_pw")).sendKeys(password);
 
+
+        /**
+         *  navigate to task
+         */
         Thread.sleep(1000);
         driver.findElement(By.cssSelector("input[name=\"yt0\"]")).click();
 
         Thread.sleep(1000);
         driver.findElement(By.className("cockpitStartButton")).click();
 
+
+        /**
+         * press any key to start
+         */
         Thread.sleep(1000);
         Keyboard kb = new Keyboard();
         kb.type(" ");
 
+
+        /**
+         * do the task
+         */
         while(true) {
             try {
                 Thread.sleep(delay);
